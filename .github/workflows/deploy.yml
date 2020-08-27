@@ -15,12 +15,16 @@ jobs:
       with:
         dotnet-version: 3.1.101
 
-    - name: publish
+    - name: test
+      run: |
+        dotnet test
+
+    - name: pack
       run: |
         cd Squidex.Text
         dotnet pack -c Release
 
-    - name: pack
+    - name: publish
       run: |
         cd Squidex.Text/bin/Release
         dotnet nuget push *.nupkg --source 'https://api.nuget.org/v3/index.json' --skip-duplicate -k ${{ secrets.nuget }} 

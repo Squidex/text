@@ -20,7 +20,7 @@ namespace Squidex.Text.Tests
         [Fact]
         public void Should_count_zero_words_for_whitspace_text()
         {
-            Assert.Equal(0, Words.Count(string.Empty));
+            Assert.Equal(0, Words.Count("  "));
         }
 
         [Fact]
