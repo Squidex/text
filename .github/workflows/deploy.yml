@@ -1,4 +1,4 @@
-name: Build Dotnet SDK
+name: Build and Push to Nuget
 jobs:
   build:
 
