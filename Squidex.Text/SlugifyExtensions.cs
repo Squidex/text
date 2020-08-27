@@ -549,6 +549,21 @@ namespace Squidex.Text
         /// </returns>
         public static string Slugify(this string value, ISet<char> preserveHash = null, bool singleCharDiactric = false, char separator = '-')
         {
+            return Slugify(value.AsSpan(), preserveHash, singleCharDiactric, separator);
+        }
+
+        /// <summary>
+        /// Converts the given string to a slug.
+        /// </summary>
+        /// <param name="value">The string to convert.</param>
+        /// <param name="preserveHash">The characters to preserver.</param>
+        /// <param name="singleCharDiactric">True, to use single char diacritics.</param>
+        /// <param name="separator">The separator between words.</param>
+        /// <returns>
+        /// The slugified string.
+        /// </returns>
+        public static string Slugify(ReadOnlySpan<char> value, ISet<char> preserveHash = null, bool singleCharDiactric = false, char separator = '-')
+        {
             var result = new StringBuilder(value.Length);
 
             var lastChar = (char)0;

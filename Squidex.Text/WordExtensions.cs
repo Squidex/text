@@ -12,46 +12,46 @@ namespace Squidex.Text
     /// <summary>
     /// Helper methods to deal with words.
     /// </summary>
-    public static class Words
+    public static class WordExtensions
     {
         /// <summary>
         /// Counts the number of words in a text.
         /// </summary>
-        /// <param name="text">The given text.</param>
+        /// <param name="value">The given text.</param>
         /// <returns>
         /// The number of found words in the text.
         /// </returns>
-        public static int Count(string text)
+        public static int WordCount(this string value)
         {
-            if (text == null)
+            if (value == null)
             {
                 return 0;
             }
 
-            return Count(text.AsSpan());
+            return value.AsSpan().WordCount();
         }
 
         /// <summary>
         /// Counts the number of words in a text.
         /// </summary>
-        /// <param name="text">The given text.</param>
+        /// <param name="value">The given text.</param>
         /// <returns>
         /// The number of found words in the text.
         /// </returns>
-        public static int Count(ReadOnlySpan<char> text)
+        public static int WordCount(this ReadOnlySpan<char> value)
         {
-            if (text.Length == 0)
+            if (value.Length == 0)
             {
                 return 0;
             }
 
             var result = 0;
 
-            for (var i = 0; i < text.Length; i++)
+            for (var i = 0; i < value.Length; i++)
             {
-                var current = text[i];
+                var current = value[i];
 
-                if (!char.IsWhiteSpace(current) && !char.IsPunctuation(current) && WordBoundary.IsBoundary(text, i))
+                if (!char.IsWhiteSpace(current) && !char.IsPunctuation(current) && WordBoundary.IsBoundary(value, i))
                 {
                     result++;
                 }
