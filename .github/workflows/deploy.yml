@@ -21,10 +21,8 @@ jobs:
 
     - name: pack
       run: |
-        cd Squidex.Text
         dotnet pack -c Release
 
     - name: publish
       run: |
-        cd Squidex.Text/bin/Release
-        dotnet nuget push *.nupkg --source 'https://api.nuget.org/v3/index.json' --skip-duplicate -k ${{ secrets.nuget }} 
+        dotnet nuget push **/*.nupkg --source 'https://api.nuget.org/v3/index.json' --skip-duplicate -k ${{ secrets.nuget }} --no-symbols 1 
