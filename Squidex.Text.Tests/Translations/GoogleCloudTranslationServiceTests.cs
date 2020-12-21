@@ -12,6 +12,7 @@ using Xunit;
 
 namespace Squidex.Text.Tests.Translations
 {
+    [Trait("Category", "Dependencies")]
     public class GoogleCloudTranslationServiceTests : TranslationServiceTestsBase<GoogleCloudTranslationService>
     {
         protected override GoogleCloudTranslationService CreateService()
