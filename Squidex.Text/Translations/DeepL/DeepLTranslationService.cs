@@ -21,7 +21,7 @@ namespace Squidex.Text.Translations
     public sealed class DeepLTranslationService : ITranslationService
     {
         private const string Url = "https://api.deepl.com/v2/translate";
-        private readonly DeepLOptions deeplOptions;
+        private readonly DeepLOptions options;
         private HttpClient httpClient;
 
         private sealed class Response
@@ -41,14 +41,14 @@ namespace Squidex.Text.Translations
 
         public DeepLTranslationService(DeepLOptions deeplOptions)
         {
-            this.deeplOptions = deeplOptions;
+            this.options = deeplOptions;
         }
 
         public async Task<IReadOnlyList<TranslationResult>> TranslateAsync(IEnumerable<string> texts, string targetLanguage, string sourceLanguage = null, CancellationToken ct = default)
         {
             var results = new List<TranslationResult>();
 
-            if (string.IsNullOrWhiteSpace(deeplOptions.AuthKey))
+            if (string.IsNullOrWhiteSpace(options.AuthKey))
             {
                 for (var i = 0; i < texts.Count(); i++)
                 {
@@ -70,7 +70,7 @@ namespace Squidex.Text.Translations
 
             var parameters = new List<KeyValuePair<string, string>>
             {
-                new KeyValuePair<string, string>("auth_key", deeplOptions.AuthKey),
+                new KeyValuePair<string, string>("auth_key", options.AuthKey),
                 new KeyValuePair<string, string>("target_lang", GetLanguageCode(targetLanguage))
             };
 
