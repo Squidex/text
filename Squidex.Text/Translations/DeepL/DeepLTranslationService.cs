@@ -21,8 +21,8 @@ namespace Squidex.Text.Translations
     public sealed class DeepLTranslationService : ITranslationService
     {
         private const string Url = "https://api.deepl.com/v2/translate";
-        private readonly HttpClient httpClient = new HttpClient();
         private readonly DeepLOptions deeplOptions;
+        private HttpClient httpClient;
 
         private sealed class Response
         {
@@ -56,6 +56,11 @@ namespace Squidex.Text.Translations
                 }
 
                 return results;
+            }
+
+            if (httpClient == null)
+            {
+                httpClient = new HttpClient();
             }
 
             var parameters = new List<KeyValuePair<string, string>>

@@ -18,15 +18,11 @@ namespace Squidex.Text.Translations.GoogleCloud
 {
     public sealed class GoogleCloudTranslationService : ITranslationService
     {
-        private readonly TranslationServiceClient service;
         private readonly GoogleCloudTranslationOptions options;
+        private TranslationServiceClient service;
 
         public GoogleCloudTranslationService(GoogleCloudTranslationOptions options)
         {
-            service =
-                new TranslationServiceClientBuilder()
-                    .Build();
-
             this.options = options;
         }
 
@@ -42,6 +38,11 @@ namespace Squidex.Text.Translations.GoogleCloud
                 }
 
                 return results;
+            }
+
+            if (service == null)
+            {
+                service = new TranslationServiceClientBuilder().Build();
             }
 
             var request = new TranslateTextRequest
