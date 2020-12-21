@@ -56,6 +56,20 @@ namespace Squidex.Text.Tests.Translations
 
         [Fact]
         [Trait("Category", "Dependencies")]
+        public async Task Should_translate_text2()
+        {
+            var service = CreateService();
+
+            var results = await service.TranslateAsync(new[]
+            {
+                "Hello World"
+            }, "de-DE", "en");
+
+            AssertTranslation(TranslationResultCode.Translated, "Hallo Welt", "en", results[0]);
+        }
+
+        [Fact]
+        [Trait("Category", "Dependencies")]
         public async Task Should_translate_multiple_texts()
         {
             var service = CreateService();
@@ -70,7 +84,7 @@ namespace Squidex.Text.Tests.Translations
             AssertTranslation(TranslationResultCode.Translated, "Hallo Erde", "en", results[1]);
         }
 
-        private static void AssertTranslation(TranslationResultCode code, string text, string language, TranslationResult result)
+        protected static void AssertTranslation(TranslationResultCode code, string text, string language, TranslationResult result)
         {
             Assert.Equal((code, text, language), (result.Code, result.Text.Replace(",", string.Empty), result.SourceLanguage));
         }

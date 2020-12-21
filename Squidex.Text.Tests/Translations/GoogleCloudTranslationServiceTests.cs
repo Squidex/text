@@ -31,5 +31,33 @@ namespace Squidex.Text.Tests.Translations
 
             Assert.All(results, x => Assert.Equal(TranslationResultCode.NotConfigured, x.Code));
         }
+
+        [Fact]
+        [Trait("Category", "Dependencies")]
+        public async Task Should_translate_text_to_korean()
+        {
+            var service = CreateService();
+
+            var results = await service.TranslateAsync(new[]
+            {
+                "World"
+            }, "ko", "en");
+
+            AssertTranslation(TranslationResultCode.Translated, "세계", "en", results[0]);
+        }
+
+        [Fact]
+        [Trait("Category", "Dependencies")]
+        public async Task Should_translate_text_to_hebrew()
+        {
+            var service = CreateService();
+
+            var results = await service.TranslateAsync(new[]
+            {
+                "World"
+            }, "he-IL", "en");
+
+            AssertTranslation(TranslationResultCode.Translated, "עוֹלָם", "en", results[0]);
+        }
     }
 }

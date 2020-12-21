@@ -60,11 +60,11 @@ namespace Squidex.Text.Translations.GoogleCloud
                 request.Contents.Add(text);
             }
 
-            request.TargetLanguageCode = GetLanguageCode(targetLanguage);
+            request.TargetLanguageCode = targetLanguage;
 
             if (sourceLanguage != null)
             {
-                request.SourceLanguageCode = GetLanguageCode(sourceLanguage);
+                request.SourceLanguageCode = sourceLanguage;
             }
 
             request.MimeType = "text/plain";
@@ -112,11 +112,6 @@ namespace Squidex.Text.Translations.GoogleCloud
                 default:
                     return TranslationResult.Failed;
             }
-        }
-
-        private static string GetLanguageCode(string language)
-        {
-            return language.Substring(0, 2).ToUpperInvariant();
         }
     }
 }
