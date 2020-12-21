@@ -72,7 +72,7 @@ namespace Squidex.Text.Tests.Translations
 
         private static void AssertTranslation(TranslationResultCode code, string text, string language, TranslationResult result)
         {
-            Assert.Equal((code, text, language), (result.Code, result.Translation.Replace(",", string.Empty), result.TranslationLanguage));
+            Assert.Equal((code, text, language), (result.Code, result.Text.Replace(",", string.Empty), result.SourceLanguage));
         }
     }
 }

@@ -17,15 +17,16 @@ namespace Squidex.Text.Translations
 
         public TranslationResultCode Code { get; }
 
-        public string Translation { get; set; }
+        public string Text { get; set; }
 
-        public string TranslationLanguage { get; set; }
+        public string SourceLanguage { get; set; }
 
-        public TranslationResult(string translation, string translationLanguage)
+        public TranslationResult(string text, string sourceLanguage)
             : this(TranslationResultCode.Translated)
         {
-            Translation = translation;
-            TranslationLanguage = translationLanguage;
+            Text = text;
+
+            SourceLanguage = sourceLanguage;
         }
 
         private TranslationResult(TranslationResultCode code)
