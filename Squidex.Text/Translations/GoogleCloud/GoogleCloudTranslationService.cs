@@ -40,6 +40,11 @@ namespace Squidex.Text.Translations.GoogleCloud
                 return results;
             }
 
+            if (!texts.Any())
+            {
+                return results;
+            }
+
             if (service == null)
             {
                 service = new TranslationServiceClientBuilder().Build();

@@ -58,6 +58,11 @@ namespace Squidex.Text.Translations
                 return results;
             }
 
+            if (!texts.Any())
+            {
+                return results;
+            }
+
             if (httpClient == null)
             {
                 httpClient = new HttpClient();
