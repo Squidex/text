@@ -13,20 +13,33 @@ using System.Threading.Tasks;
 
 namespace Squidex.Text.Translations
 {
+    /// <summary>
+    /// The default implementation of the <see cref="ITranslator"/> interface which delegates the translation to one or many services.
+    /// </summary>
     public sealed class Translator : ITranslator
     {
         private readonly IEnumerable<ITranslationService> services;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Translator"/> class with the translation services.
+        /// </summary>
+        /// <param name="services">The translation services.</param>
         public Translator(IEnumerable<ITranslationService> services)
         {
             this.services = services;
         }
 
+        /// <inheritdoc/>
         public async Task<IReadOnlyList<TranslationResult>> TranslateAsync(IEnumerable<string> texts, string targetLanguage, string sourceLanguage = null, CancellationToken ct = default)
         {
             if (texts == null)
             {
                 throw new ArgumentNullException(nameof(texts));
+            }
+
+            if (targetLanguage == null)
+            {
+                throw new ArgumentNullException(nameof(targetLanguage));
             }
 
             var textArray = texts.ToArray();
@@ -82,6 +95,7 @@ namespace Squidex.Text.Translations
             return results;
         }
 
+        /// <inheritdoc/>
         public async Task<TranslationResult> TranslateAsync(string text, string targetLanguage, string sourceLanguage = null, CancellationToken ct = default)
         {
             if (text == null)
