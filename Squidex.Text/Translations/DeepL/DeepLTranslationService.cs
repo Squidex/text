@@ -5,6 +5,7 @@
 //  All rights reserved. Licensed under the MIT license.
 // ==========================================================================
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -24,13 +25,13 @@ namespace Squidex.Text.Translations
         private readonly DeepLOptions options;
         private HttpClient httpClient;
 
-        private sealed class Response
+        private sealed class TranslationsDto
         {
             [JsonPropertyName("translations")]
-            public ResponseTranslation[] Translations { get; set; }
+            public TranslationDto[] Translations { get; set; }
         }
 
-        private sealed class ResponseTranslation
+        private sealed class TranslationDto
         {
             [JsonPropertyName("text")]
             public string Text { get; set; }
@@ -92,12 +93,13 @@ namespace Squidex.Text.Translations
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var result = JsonSerializer.Deserialize<Response>(responseString);
+                    var result = JsonSerializer.Deserialize<TranslationsDto>(responseString);
 
-                    foreach (var item in result.Translations)
+                    foreach (var translation in result.Translations)
                     {
-                        results.Add(new TranslationResult(item.Text,
-                            GetSourceLanguage(item.DetectedSourceLanguage, sourceLanguage)));
+                        var language = GetSourceLanguage(translation.DetectedSourceLanguage, sourceLanguage);
+
+                        results.Add(new TranslationResult(translation.Text, language));
                     }
                 }
                 else
@@ -140,8 +142,15 @@ namespace Squidex.Text.Translations
             }
         }
 
-        private static string GetLanguageCode(string language)
+        private string GetLanguageCode(string language)
         {
+            var mapping = options.Mapping;
+
+            if (mapping != null && mapping.TryGetValue(language, out var result) == true)
+            {
+                return result;
+            }
+
             return language.Substring(0, 2).ToUpperInvariant();
         }
     }

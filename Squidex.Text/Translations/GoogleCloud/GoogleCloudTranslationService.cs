@@ -60,11 +60,11 @@ namespace Squidex.Text.Translations.GoogleCloud
                 request.Contents.Add(text);
             }
 
-            request.TargetLanguageCode = targetLanguage;
+            request.TargetLanguageCode = GetLanguageCode(targetLanguage);
 
             if (sourceLanguage != null)
             {
-                request.SourceLanguageCode = sourceLanguage;
+                request.SourceLanguageCode = GetLanguageCode(sourceLanguage);
             }
 
             request.MimeType = "text/plain";
@@ -73,8 +73,12 @@ namespace Squidex.Text.Translations.GoogleCloud
             {
                 var response = await service.TranslateTextAsync(request, ct);
 
-                results.AddRange(response.Translations.Select(x => new TranslationResult(x.TranslatedText,
-                    GetSourceLanguage(x.DetectedLanguageCode, sourceLanguage))));
+                foreach (var translation in response.Translations)
+                {
+                    var language = GetSourceLanguage(translation.DetectedLanguageCode, sourceLanguage);
+
+                    results.Add(new TranslationResult(translation.TranslatedText, language));
+                }
             }
             catch (RpcException ex)
             {
@@ -99,6 +103,18 @@ namespace Squidex.Text.Translations.GoogleCloud
             }
 
             return result;
+        }
+
+        private string GetLanguageCode(string language)
+        {
+            var mapping = options.Mapping;
+
+            if (mapping != null && mapping.TryGetValue(language, out var result) == true)
+            {
+                return result;
+            }
+
+            return language;
         }
 
         private static TranslationResult GetResult(Status status)
