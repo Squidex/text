@@ -44,31 +44,31 @@ namespace Squidex.Text
         /// <summary>
         /// Checks if the given char in string is the end of a word.
         /// </summary>
-        /// <param name="text">The string.</param>
+        /// <param name="value">The string.</param>
         /// <param name="index">The index withing the string.</param>
         /// <returns>
         /// True if the string is the end of a word.
         /// </returns>
-        public static bool IsBoundary(ReadOnlySpan<char> text, int index)
+        public static bool IsBoundary(ReadOnlySpan<char> value, int index)
         {
-            if (text.Length == 0)
+            if (value.Length == 0)
             {
                 return true;
             }
 
-            if (index < 0 || index > text.Length - 1)
+            if (index < 0 || index > value.Length - 1)
             {
                 return false;
             }
 
-            var current = text[index];
+            var current = value[index];
 
-            if (index == text.Length - 1)
+            if (index == value.Length - 1)
             {
                 return true;
             }
 
-            var next = text[index + 1];
+            var next = value[index + 1];
 
             // Don't break inside CRLF.
             if (current == '\r' && next == '\n')
@@ -76,9 +76,9 @@ namespace Squidex.Text
                 return false;
             }
 
-            if (index < text.Length - 2)
+            if (index < value.Length - 2)
             {
-                var nextNext = text[index + 2];
+                var nextNext = value[index + 2];
 
                 // Don't break letters across certain punctuation.
                 if (IsNonCJKLetter(current) && IsMidLetter(next) && IsNonCJKLetter(nextNext))
@@ -95,7 +95,7 @@ namespace Squidex.Text
 
             if (index > 0)
             {
-                var prev = text[index - 1];
+                var prev = value[index - 1];
 
                 // Don't break letters across certain punctuation.
                 if (IsMidLetter(current) && IsNonCJKLetter(next) && IsNonCJKLetter(prev))

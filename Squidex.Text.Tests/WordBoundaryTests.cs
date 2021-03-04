@@ -110,7 +110,7 @@ namespace Squidex.Text.Tests
             Assert.True(IsWordBoundary(string.Empty, 0));
         }
 
-        private bool IsWordBoundary(string text, int index)
+        private static bool IsWordBoundary(string text, int index)
         {
             return WordBoundary.IsBoundary(text, index);
         }

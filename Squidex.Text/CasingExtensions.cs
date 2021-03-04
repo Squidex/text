@@ -5,6 +5,7 @@
 //  All rights reserved. Licensed under the MIT license.
 // ==========================================================================
 
+using System;
 using System.Text;
 
 namespace Squidex.Text
@@ -24,6 +25,18 @@ namespace Squidex.Text
         /// The given string in pascal case.
         /// </returns>
         public static string ToPascalCase(this string value)
+        {
+            return value.AsSpan().ToPascalCase();
+        }
+
+        /// <summary>
+        /// Converts the given string to pascal case.
+        /// </summary>
+        /// <param name="value">The string to convert.</param>
+        /// <returns>
+        /// The given string in pascal case.
+        /// </returns>
+        public static string ToPascalCase(this ReadOnlySpan<char> value)
         {
             if (value.Length == 0)
             {
@@ -88,6 +101,18 @@ namespace Squidex.Text
         /// </returns>
         public static string ToKebabCase(this string value)
         {
+            return value.AsSpan().ToKebabCase();
+        }
+
+        /// <summary>
+        /// Converts the given string to kebap case.
+        /// </summary>
+        /// <param name="value">The string to convert.</param>
+        /// <returns>
+        /// The given string in kebap case.
+        /// </returns>
+        public static string ToKebabCase(this ReadOnlySpan<char> value)
+        {
             if (value.Length == 0)
             {
                 return string.Empty;
@@ -136,6 +161,18 @@ namespace Squidex.Text
         /// The given string in camel case.
         /// </returns>
         public static string ToCamelCase(this string value)
+        {
+            return value.AsSpan().ToCamelCase();
+        }
+
+        /// <summary>
+        /// Converts the given string to camel case.
+        /// </summary>
+        /// <param name="value">The string to convert.</param>
+        /// <returns>
+        /// The given string in camel case.
+        /// </returns>
+        public static string ToCamelCase(this ReadOnlySpan<char> value)
         {
             if (value.Length == 0)
             {

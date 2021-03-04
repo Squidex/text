@@ -1,0 +1,13 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Authors>sebastianstehle</Authors>
+    <Company>Squidex UG (haftungsbeschränkt)</Company>
+    <Description>Squidex Text Helpers</Description>
+    <Copyright>MIT</Copyright>
+    <PackageTags>Squidex HeadlessCMS Word Count Text Helpers WordCount</PackageTags>
+    <PackageIcon>logo-squared.png</PackageIcon>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/Squidex/text/</PackageProjectUrl>
+    <Version>1.6.0</Version>
+  </PropertyGroup>
+</Project>
